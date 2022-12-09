@@ -1,0 +1,4 @@
+cbor2==5.1.2
+pyevmasm==0.2.3
+pycryptodome==3.9.8
+z3-solver==4.8.8.0

@@ -1,0 +1,352 @@
+WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %182 = PHI(%11, #87, #192)
+WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %189 = PHI(%11, #e2)
+WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %181 = PHI(#0, %11)
+<SSAFunction name:_dispatch hash:0x0 offset:0x0 num_blocks:1 blocks:<SSABasicBlock offset:0x0 num_insns:5 in: [] insns:[
+        <0x4: MSTORE(#40, #80)>
+        <0x7: %3 = CALLDATASIZE()>
+        <0x8: %4 = LT(%3, #4)>
+        <0xc: JUMPI(#6d, %4)>
+        <0xc: ICALL(_fallthrough)>
+] fallthrough:None jumps:[0x6d]>>
+
+<SSAFunction name:_fallthrough hash:0x0 offset:0xd num_blocks:6 blocks:<SSABasicBlock offset:0xd num_insns:5 in: [] insns:[
+        <0xf: %7 = CALLDATALOAD(#0)>
+        <0x2f: %9 = DIV(%7, #100000000000000000000000000000000000000000000000000000000)>
+        <0x35: %11 = AND(#ffffffff, %9)>
+        <0x3c: %13 = EQ(#ddc7e19, %11)>
+        <0x0: ICONDCALL(_unknown_0xddc7e19(), %13)>
+] fallthrough:0x41 jumps:None>
+<SSABasicBlock offset:0x41 num_insns:2 in: [0xd] insns:[
+        <0x47: %16 = EQ(#1003e2d2, %11)>
+        <0x0: ICONDCALL(add(uint256), %16)>
+] fallthrough:0x4c jumps:None>
+<SSABasicBlock offset:0x4c num_insns:2 in: [0x41] insns:[
+        <0x52: %19 = EQ(#2f9ff82c, %11)>
+        <0x0: ICONDCALL(_unknown_0x2f9ff82c(), %19)>
+] fallthrough:0x57 jumps:None>
+<SSABasicBlock offset:0x57 num_insns:2 in: [0x4c] insns:[
+        <0x5d: %22 = EQ(#41d6ac32, %11)>
+        <0x0: ICONDCALL(_unknown_0x41d6ac32(), %22)>
+] fallthrough:0x62 jumps:None>
+<SSABasicBlock offset:0x62 num_insns:2 in: [0x57] insns:[
+        <0x68: %25 = EQ(#f2d091e4, %11)>
+        <0x0: ICONDCALL(_unknown_0xf2d091e4(), %25)>
+] fallthrough:0x6d jumps:None>
+<SSABasicBlock offset:0x6d num_insns:1 in: [0x0,0x62] insns:[
+        <0x71: REVERT(#0, #0)>
+] fallthrough:None jumps:None>>
+
+<SSAFunction name: hash:0xddc7e19 offset:0x72 num_blocks:23 blocks:<SSABasicBlock offset:0x72 num_insns:3 in: [] insns:[
+        <0x73: %28 = CALLVALUE()>
+        <0x75: %29 = ISZERO(%28)>
+        <0x79: JUMPI(#7e, %29)>
+] fallthrough:0x7a jumps:[0xfb]>
+<SSABasicBlock offset:0x7a num_insns:1 in: [0x72] insns:[
+        <0x7d: REVERT(#0, #0)>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0x87 num_insns:1 in: [0x141,0x26c] insns:[
+        <0x88: STOP()>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0xcb num_insns:1 in: [0x181,0x220] insns:[
+        <0xcc: STOP()>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0xe2 num_insns:1 in: [0x192] insns:[
+        <0xe3: STOP()>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0xfb num_insns:6 in: [0x72] insns:[
+        <0x100: %67 = MLOAD(#40)>
+        <0x104: MSTORE(%67, #3)>
+        <0x10d: %72 = ADD(%67, #80)>
+        <0x110: MSTORE(#40, %72)>
+        <0x112: %74 = ISZERO(#3)>
+        <0x116: JUMPI(#12b, %74)>
+] fallthrough:0x117 jumps:[0x12b]>
+<SSABasicBlock offset:0x117 num_insns:3 in: [0xfb] insns:[
+        <0x11a: %77 = ADD(#20, %67)>
+        <0x120: %80 = CODESIZE()>
+        <0x122: CODECOPY(%77, %80, #60)>
+] fallthrough:0x12b jumps:None>
+<SSABasicBlock offset:0x12b num_insns:3 in: [0xfb,0x117] insns:[
+        <0x131: %83 = MLOAD(%67)>
+        <0x135: %85 = ADD(#20, %67)>
+        <0x140: JUMP(#1d7)>
+] fallthrough:None jumps:[0x1d7]>
+<SSABasicBlock offset:0x141 num_insns:3 in: [0x181,0x220] insns:[
+        <0x141: %183 = PHI(%181, %182)>
+        <0x141: %189 = PHI(%11, #e2)>
+        <0x143: JUMP(%183)>
+] fallthrough:None jumps:[0x192,0x87]>
+<SSABasicBlock offset:0x181 num_insns:1 in: [0x242] insns:[
+        <0x182: JUMP(%184)>
+] fallthrough:None jumps:[0x141,0xcb]>
+<SSABasicBlock offset:0x192 num_insns:2 in: [0x141,0x26c] insns:[
+        <0x192: %191 = PHI(%189, #e2)>
+        <0x194: JUMP(%191)>
+] fallthrough:None jumps:[0xe2]>
+<SSABasicBlock offset:0x1d7 num_insns:7 in: [0x12b] insns:[
+        <0x1da: %129 = SLOAD(#1)>
+        <0x1dd: SSTORE(#1, %83)>
+        <0x1e1: MSTORE(#0, #1)>
+        <0x1e6: %133 = SHA3(#0, #20)>
+        <0x1e9: %134 = ADD(%133, %129)>
+        <0x1ec: %135 = ISZERO(%83)>
+        <0x1f0: JUMPI(#213, %135)>
+] fallthrough:0x1f1 jumps:[0x213]>
+<SSABasicBlock offset:0x1f1 num_insns:2 in: [0x1d7] insns:[
+        <0x1f4: %138 = MUL(#20, %83)>
+        <0x1f6: %139 = ADD(%85, %138)>
+] fallthrough:0x1f7 jumps:None>
+<SSABasicBlock offset:0x1f7 num_insns:5 in: [0x1f1,0x200] insns:[
+        <0x1f7: %193 = PHI(%85, %145)>
+        <0x1f7: %194 = PHI(%133, %147)>
+        <0x1fa: %140 = GT(%139, %193)>
+        <0x1fb: %141 = ISZERO(%140)>
+        <0x1ff: JUMPI(#212, %141)>
+] fallthrough:0x200 jumps:[0x213]>
+<SSABasicBlock offset:0x200 num_insns:5 in: [0x1f7] insns:[
+        <0x201: %143 = MLOAD(%193)>
+        <0x203: SSTORE(%194, %143)>
+        <0x207: %145 = ADD(#20, %193)>
+        <0x20c: %147 = ADD(#1, %194)>
+        <0x211: JUMP(#1f7)>
+] fallthrough:None jumps:[0x1f7]>
+<SSABasicBlock offset:0x213 num_insns:2 in: [0x1d7,0x1f7] insns:[
+        <0x213: %198 = PHI(%133, %194)>
+        <0x21f: JUMP(#271)>
+] fallthrough:None jumps:[0x271]>
+<SSABasicBlock offset:0x220 num_insns:1 in: [0x293] insns:[
+        <0x223: JUMP(%184)>
+] fallthrough:None jumps:[0x141,0xcb]>
+<SSABasicBlock offset:0x242 num_insns:1 in: [0x293] insns:[
+        <0x244: JUMP(%195)>
+] fallthrough:None jumps:[0x181]>
+<SSABasicBlock offset:0x26c num_insns:2 in: [0x245,0x293] insns:[
+        <0x26c: %196 = PHI(%182, #192)>
+        <0x270: JUMP(%196)>
+] fallthrough:None jumps:[0x192,0x87]>
+<SSABasicBlock offset:0x271 num_insns:7 in: [0x213,0x224,0x253] insns:[
+        <0x271: %181 = PHI(#0, %11)>
+        <0x271: %182 = PHI(%11, #87, #192)>
+        <0x271: %184 = PHI(#1, #cb, #141)>
+        <0x271: %195 = PHI(#0, #1, #181)>
+        <0x271: %197 = PHI(%134, %157, %168)>
+        <0x271: %199 = PHI(%156, %167, %198)>
+        <0x271: %201 = PHI(#220, #242, #26b)>
+] fallthrough:0x277 jumps:None>
+<SSABasicBlock offset:0x277 num_insns:4 in: [0x271,0x280] insns:[
+        <0x277: %200 = PHI(%179, %199)>
+        <0x27a: %173 = GT(%197, %200)>
+        <0x27b: %174 = ISZERO(%173)>
+        <0x27f: JUMPI(#28f, %174)>
+] fallthrough:0x280 jumps:[0x293]>
+<SSABasicBlock offset:0x280 num_insns:3 in: [0x277] insns:[
+        <0x286: SSTORE(%200, #0)>
+        <0x28a: %179 = ADD(#1, %200)>
+        <0x28e: JUMP(#277)>
+] fallthrough:None jumps:[0x277]>
+<SSABasicBlock offset:0x293 num_insns:1 in: [0x277] insns:[
+        <0x295: JUMP(%201)>
+] fallthrough:None jumps:[0x220,0x242,0x26c]>>
+
+<SSAFunction name:add(uint256) hash:0x1003e2d2 offset:0x89 num_blocks:5 blocks:<SSABasicBlock offset:0x89 num_insns:3 in: [] insns:[
+        <0x8a: %34 = CALLVALUE()>
+        <0x8c: %35 = ISZERO(%34)>
+        <0x90: JUMPI(#95, %35)>
+] fallthrough:0x91 jumps:[0x95]>
+<SSABasicBlock offset:0x91 num_insns:1 in: [0x89] insns:[
+        <0x94: REVERT(#0, #0)>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0x95 num_insns:2 in: [0x89] insns:[
+        <0xa4: %43 = CALLDATALOAD(#4)>
+        <0xb3: JUMP(#144)>
+] fallthrough:None jumps:[0x144]>
+<SSABasicBlock offset:0xb4 num_insns:1 in: [0x144] insns:[
+        <0xb5: STOP()>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0x144 num_insns:9 in: [0x95] insns:[
+        <0x14d: %90 = SLOAD(#1)>
+        <0x14e: %91 = ADD(%90, #1)>
+        <0x151: SSTORE(#1, %91)>
+        <0x15a: %93 = SUB(%91, #1)>
+        <0x15e: MSTORE(#0, #1)>
+        <0x163: %97 = SHA3(#0, #20)>
+        <0x164: %98 = ADD(%97, %93)>
+        <0x16f: SSTORE(%98, %43)>
+        <0x172: JUMP(#b4)>
+] fallthrough:None jumps:[0xb4]>>
+
+<SSAFunction name: hash:0x2f9ff82c offset:0xb6 num_blocks:3 blocks:<SSABasicBlock offset:0xb6 num_insns:3 in: [] insns:[
+        <0xb7: %47 = CALLVALUE()>
+        <0xb9: %48 = ISZERO(%47)>
+        <0xbd: JUMPI(#c2, %48)>
+] fallthrough:0xbe jumps:[0x224]>
+<SSABasicBlock offset:0xbe num_insns:1 in: [0xb6] insns:[
+        <0xc1: REVERT(#0, #0)>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0x224 num_insns:6 in: [0xb6] insns:[
+        <0x227: %151 = SLOAD(#1)>
+        <0x22b: SSTORE(#1, #0)>
+        <0x22f: MSTORE(#0, #1)>
+        <0x234: %156 = SHA3(#0, #20)>
+        <0x237: %157 = ADD(%156, %151)>
+        <0x241: JUMP(#271)>
+] fallthrough:None jumps:[0x271]>>
+
+<SSAFunction name: hash:0x41d6ac32 offset:0xcd num_blocks:4 blocks:<SSABasicBlock offset:0xcd num_insns:3 in: [] insns:[
+        <0xce: %53 = CALLVALUE()>
+        <0xd0: %54 = ISZERO(%53)>
+        <0xd4: JUMPI(#d9, %54)>
+] fallthrough:0xd5 jumps:[0x245]>
+<SSABasicBlock offset:0xd5 num_insns:1 in: [0xcd] insns:[
+        <0xd8: REVERT(#0, #0)>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0x245 num_insns:5 in: [0xcd] insns:[
+        <0x247: %160 = SLOAD(#1)>
+        <0x24a: SSTORE(#1, #0)>
+        <0x24d: %161 = GT(%160, #0)>
+        <0x24e: %162 = ISZERO(%161)>
+        <0x252: JUMPI(#26c, %162)>
+] fallthrough:0x253 jumps:[0x26c]>
+<SSABasicBlock offset:0x253 num_insns:4 in: [0x245] insns:[
+        <0x257: MSTORE(#0, #1)>
+        <0x25c: %167 = SHA3(#0, #20)>
+        <0x25f: %168 = ADD(%167, %160)>
+        <0x26a: JUMP(#271)>
+] fallthrough:None jumps:[0x271]>>
+
+<SSAFunction name: hash:0xf2d091e4 offset:0xe4 num_blocks:7 blocks:<SSABasicBlock offset:0xe4 num_insns:3 in: [] insns:[
+        <0xe5: %59 = CALLVALUE()>
+        <0xe7: %60 = ISZERO(%59)>
+        <0xeb: JUMPI(#f0, %60)>
+] fallthrough:0xec jumps:[0x19b]>
+<SSABasicBlock offset:0xec num_insns:1 in: [0xe4] insns:[
+        <0xef: REVERT(#0, #0)>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0xf9 num_insns:1 in: [0x19b] insns:[
+        <0xfa: STOP()>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0x19b num_insns:5 in: [0xe4,0x1b9] insns:[
+        <0x19b: %192 = PHI(#0, %127)>
+        <0x19f: %110 = SLOAD(#1)>
+        <0x1a3: %111 = LT(%192, %110)>
+        <0x1a4: %112 = ISZERO(%111)>
+        <0x1a8: JUMPI(#1d4, %112)>
+] fallthrough:0x1a9 jumps:[0xf9]>
+<SSABasicBlock offset:0x1a9 num_insns:3 in: [0x19b] insns:[
+        <0x1af: %116 = SLOAD(#1)>
+        <0x1b1: %117 = LT(%192, %116)>
+        <0x1b7: JUMPI(#1b9, %117)>
+] fallthrough:0x1b8 jumps:[0x1b9]>
+<SSABasicBlock offset:0x1b8 num_insns:1 in: [0x1a9] insns:[
+        <0x1b8: INVALID()>
+] fallthrough:None jumps:None>
+<SSABasicBlock offset:0x1b9 num_insns:6 in: [0x1a9] insns:[
+        <0x1bd: MSTORE(#0, #1)>
+        <0x1c2: %124 = SHA3(#0, #20)>
+        <0x1c3: %125 = ADD(%124, %192)>
+        <0x1c6: SSTORE(%125, #0)>
+        <0x1cc: %127 = ADD(#1, %192)>
+        <0x1d3: JUMP(#19b)>
+] fallthrough:None jumps:[0x19b]>>
+
+
+Identified Functions:
+        _dispatch argument offsets:[]
+        _fallthrough argument offsets:[(0, 32)]
+        _unknown_0xddc7e19() argument offsets:[]
+        add(uint256) argument offsets:[(4, 36)]
+        _unknown_0x2f9ff82c() argument offsets:[]
+        _unknown_0x41d6ac32() argument offsets:[]
+        _unknown_0xf2d091e4() argument offsets:[]
+
+Storage Locations: [1]
+Memory Locations: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 64]
+Analyzing Memory Location: 64
+
+        0x4: MSTORE(#40, #80)
+        0x100: %67 = MLOAD(#40)
+        0x110: MSTORE(#40, %72)
+
+
+
+Function _dispatch storage:
+Function _fallthrough storage:
+Function _unknown_0xddc7e19() storage:
+        Analyzing Storage Location: 1
+                0x14d: %90 = SLOAD(#1)
+                0x151: SSTORE(#1, %91)
+                0x19f: %110 = SLOAD(#1)
+                0x1af: %116 = SLOAD(#1)
+                0x1da: %129 = SLOAD(#1)
+                0x1dd: SSTORE(#1, %83)
+                0x227: %151 = SLOAD(#1)
+                0x22b: SSTORE(#1, #0)
+                0x247: %160 = SLOAD(#1)
+                0x24a: SSTORE(#1, #0)
+
+
+Function add(uint256) storage:
+        Analyzing Storage Location: 1
+                0x14d: %90 = SLOAD(#1)
+                0x151: SSTORE(#1, %91)
+                0x19f: %110 = SLOAD(#1)
+                0x1af: %116 = SLOAD(#1)
+                0x1da: %129 = SLOAD(#1)
+                0x1dd: SSTORE(#1, %83)
+                0x227: %151 = SLOAD(#1)
+                0x22b: SSTORE(#1, #0)
+                0x247: %160 = SLOAD(#1)
+                0x24a: SSTORE(#1, #0)
+
+
+Function _unknown_0x2f9ff82c() storage:
+        Analyzing Storage Location: 1
+                0x14d: %90 = SLOAD(#1)
+                0x151: SSTORE(#1, %91)
+                0x19f: %110 = SLOAD(#1)
+                0x1af: %116 = SLOAD(#1)
+                0x1da: %129 = SLOAD(#1)
+                0x1dd: SSTORE(#1, %83)
+                0x227: %151 = SLOAD(#1)
+                0x22b: SSTORE(#1, #0)
+                0x247: %160 = SLOAD(#1)
+                0x24a: SSTORE(#1, #0)
+
+
+Function _unknown_0x41d6ac32() storage:
+        Analyzing Storage Location: 1
+                0x14d: %90 = SLOAD(#1)
+                0x151: SSTORE(#1, %91)
+                0x19f: %110 = SLOAD(#1)
+                0x1af: %116 = SLOAD(#1)
+                0x1da: %129 = SLOAD(#1)
+                0x1dd: SSTORE(#1, %83)
+                0x227: %151 = SLOAD(#1)
+                0x22b: SSTORE(#1, #0)
+                0x247: %160 = SLOAD(#1)
+                0x24a: SSTORE(#1, #0)
+
+
+Function _unknown_0xf2d091e4() storage:
+        Analyzing Storage Location: 1
+                0x14d: %90 = SLOAD(#1)
+                0x151: SSTORE(#1, %91)
+                0x19f: %110 = SLOAD(#1)
+                0x1af: %116 = SLOAD(#1)
+                0x1da: %129 = SLOAD(#1)
+                0x1dd: SSTORE(#1, %83)
+                0x227: %151 = SLOAD(#1)
+                0x22b: SSTORE(#1, #0)
+                0x247: %160 = SLOAD(#1)
+                0x24a: SSTORE(#1, #0)
+
+
+[+] Contract can not send ether.
+[+] Contract calls:
+[+] Wrote _dispatch to output/_dispatch.png
+[+] Wrote _fallthrough to output/_fallthrough.png
+[+] Wrote _unknown_0xddc7e19() to output/_unknown_0xddc7e19().png
+[+] Wrote add(uint256) to output/add(uint256).png
+[+] Wrote _unknown_0x2f9ff82c() to output/_unknown_0x2f9ff82c().png
+[+] Wrote _unknown_0x41d6ac32() to output/_unknown_0x41d6ac32().png
+[+] Wrote _unknown_0xf2d091e4() to output/_unknown_0xf2d091e4().png
