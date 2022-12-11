@@ -14,7 +14,7 @@ WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %181 = PHI(#0
         <0x2f: %9 = DIV(%7, #100000000000000000000000000000000000000000000000000000000)>
         <0x35: %11 = AND(#ffffffff, %9)>
         <0x3c: %13 = EQ(#ddc7e19, %11)>
-        <0x0: ICONDCALL(_unknown_0xddc7e19(), %13)>
+        <0x0: ICONDCALL(loopNew(), %13)>
 ] fallthrough:0x41 jumps:None>
 <SSABasicBlock offset:0x41 num_insns:2 in: [0xd] insns:[
         <0x47: %16 = EQ(#1003e2d2, %11)>
@@ -22,21 +22,21 @@ WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %181 = PHI(#0
 ] fallthrough:0x4c jumps:None>
 <SSABasicBlock offset:0x4c num_insns:2 in: [0x41] insns:[
         <0x52: %19 = EQ(#2f9ff82c, %11)>
-        <0x0: ICONDCALL(_unknown_0x2f9ff82c(), %19)>
+        <0x0: ICONDCALL(loopDelete(), %19)>
 ] fallthrough:0x57 jumps:None>
 <SSABasicBlock offset:0x57 num_insns:2 in: [0x4c] insns:[
         <0x5d: %22 = EQ(#41d6ac32, %11)>
-        <0x0: ICONDCALL(_unknown_0x41d6ac32(), %22)>
+        <0x0: ICONDCALL(loopLength(), %22)>
 ] fallthrough:0x62 jumps:None>
 <SSABasicBlock offset:0x62 num_insns:2 in: [0x57] insns:[
         <0x68: %25 = EQ(#f2d091e4, %11)>
-        <0x0: ICONDCALL(_unknown_0xf2d091e4(), %25)>
+        <0x0: ICONDCALL(loopNormal(), %25)>
 ] fallthrough:0x6d jumps:None>
 <SSABasicBlock offset:0x6d num_insns:1 in: [0x0,0x62] insns:[
         <0x71: REVERT(#0, #0)>
 ] fallthrough:None jumps:None>>
 
-<SSAFunction name: hash:0xddc7e19 offset:0x72 num_blocks:23 blocks:<SSABasicBlock offset:0x72 num_insns:3 in: [] insns:[
+<SSAFunction name:loopNew() hash:0xddc7e19 offset:0x72 num_blocks:23 blocks:<SSABasicBlock offset:0x72 num_insns:3 in: [] insns:[
         <0x73: %28 = CALLVALUE()>
         <0x75: %29 = ISZERO(%28)>
         <0x79: JUMPI(#7e, %29)>
@@ -175,7 +175,7 @@ WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %181 = PHI(#0
         <0x172: JUMP(#b4)>
 ] fallthrough:None jumps:[0xb4]>>
 
-<SSAFunction name: hash:0x2f9ff82c offset:0xb6 num_blocks:3 blocks:<SSABasicBlock offset:0xb6 num_insns:3 in: [] insns:[
+<SSAFunction name:loopDelete() hash:0x2f9ff82c offset:0xb6 num_blocks:3 blocks:<SSABasicBlock offset:0xb6 num_insns:3 in: [] insns:[
         <0xb7: %47 = CALLVALUE()>
         <0xb9: %48 = ISZERO(%47)>
         <0xbd: JUMPI(#c2, %48)>
@@ -192,7 +192,7 @@ WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %181 = PHI(#0
         <0x241: JUMP(#271)>
 ] fallthrough:None jumps:[0x271]>>
 
-<SSAFunction name: hash:0x41d6ac32 offset:0xcd num_blocks:4 blocks:<SSABasicBlock offset:0xcd num_insns:3 in: [] insns:[
+<SSAFunction name:loopLength() hash:0x41d6ac32 offset:0xcd num_blocks:4 blocks:<SSABasicBlock offset:0xcd num_insns:3 in: [] insns:[
         <0xce: %53 = CALLVALUE()>
         <0xd0: %54 = ISZERO(%53)>
         <0xd4: JUMPI(#d9, %54)>
@@ -214,7 +214,7 @@ WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %181 = PHI(#0
         <0x26a: JUMP(#271)>
 ] fallthrough:None jumps:[0x271]>>
 
-<SSAFunction name: hash:0xf2d091e4 offset:0xe4 num_blocks:7 blocks:<SSABasicBlock offset:0xe4 num_insns:3 in: [] insns:[
+<SSAFunction name:loopNormal() hash:0xf2d091e4 offset:0xe4 num_blocks:7 blocks:<SSABasicBlock offset:0xe4 num_insns:3 in: [] insns:[
         <0xe5: %59 = CALLVALUE()>
         <0xe7: %60 = ISZERO(%59)>
         <0xeb: JUMPI(#f0, %60)>
@@ -253,11 +253,11 @@ WARNING:rattle.recover:Found CALLDATALOAD(0) user that isn't an EQ %181 = PHI(#0
 Identified Functions:
         _dispatch argument offsets:[]
         _fallthrough argument offsets:[(0, 32)]
-        _unknown_0xddc7e19() argument offsets:[]
+        loopNew() argument offsets:[]
         add(uint256) argument offsets:[(4, 36)]
-        _unknown_0x2f9ff82c() argument offsets:[]
-        _unknown_0x41d6ac32() argument offsets:[]
-        _unknown_0xf2d091e4() argument offsets:[]
+        loopDelete() argument offsets:[]
+        loopLength() argument offsets:[]
+        loopNormal() argument offsets:[]
 
 Storage Locations: [1]
 Memory Locations: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 64]
@@ -271,7 +271,7 @@ Analyzing Memory Location: 64
 
 Function _dispatch storage:
 Function _fallthrough storage:
-Function _unknown_0xddc7e19() storage:
+Function loopNew() storage:
         Analyzing Storage Location: 1
                 0x14d: %90 = SLOAD(#1)
                 0x151: SSTORE(#1, %91)
@@ -299,7 +299,7 @@ Function add(uint256) storage:
                 0x24a: SSTORE(#1, #0)
 
 
-Function _unknown_0x2f9ff82c() storage:
+Function loopDelete() storage:
         Analyzing Storage Location: 1
                 0x14d: %90 = SLOAD(#1)
                 0x151: SSTORE(#1, %91)
@@ -313,7 +313,7 @@ Function _unknown_0x2f9ff82c() storage:
                 0x24a: SSTORE(#1, #0)
 
 
-Function _unknown_0x41d6ac32() storage:
+Function loopLength() storage:
         Analyzing Storage Location: 1
                 0x14d: %90 = SLOAD(#1)
                 0x151: SSTORE(#1, %91)
@@ -327,7 +327,7 @@ Function _unknown_0x41d6ac32() storage:
                 0x24a: SSTORE(#1, #0)
 
 
-Function _unknown_0xf2d091e4() storage:
+Function loopNormal() storage:
         Analyzing Storage Location: 1
                 0x14d: %90 = SLOAD(#1)
                 0x151: SSTORE(#1, %91)
@@ -345,8 +345,8 @@ Function _unknown_0xf2d091e4() storage:
 [+] Contract calls:
 [+] Wrote _dispatch to output/_dispatch.png
 [+] Wrote _fallthrough to output/_fallthrough.png
-[+] Wrote _unknown_0xddc7e19() to output/_unknown_0xddc7e19().png
+[+] Wrote loopNew() to output/loopNew().png
 [+] Wrote add(uint256) to output/add(uint256).png
-[+] Wrote _unknown_0x2f9ff82c() to output/_unknown_0x2f9ff82c().png
-[+] Wrote _unknown_0x41d6ac32() to output/_unknown_0x41d6ac32().png
-[+] Wrote _unknown_0xf2d091e4() to output/_unknown_0xf2d091e4().png
+[+] Wrote loopDelete() to output/loopDelete().png
+[+] Wrote loopLength() to output/loopLength().png
+[+] Wrote loopNormal() to output/loopNormal().png
