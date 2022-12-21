@@ -6,9 +6,10 @@ from src.rattle import Recover
 from src.sym_exec.symbolic_executor import SymExec
 from src.cfg.cfg import CFG
 from src.cfg.disassembly import generate_BBs
-from src.gas_estimate import cal_iterate_times
-from src.analyze import Analyze
+import src.gas_estimate as GasEstimate
+from src.seq_generator import SeqGenerator
 from src.certificate import Certificate
+from src.trace_filter import get_growth_traces
 
 logger = logging.getLogger()
 
@@ -46,18 +47,20 @@ def analyze(code, args):
     ssa = Recover(bytes.hex(code).encode(), edges=[], optimize=True)
     functions_with_loop = cfg.find_functions_with_loop(ssa, loops)
 
-    iterate_times = cal_iterate_times(
+    GasEstimate.cal_iterate_times(
         functions_with_loop, loops, args.gas_limit)
 
     traces = SymExec(ssa, args.max_depth).execute()
     # print(f"Found {len(traces)} traces")
-    analyze = Analyze(ssa, traces)
-    key_variables = analyze.get_key_variables(ssa, loops)
-    growth_traces = analyze.get_growth_traces(traces, key_variables)
-    sequence = analyze.generate_sequence(growth_traces, key_variables, iterate_times)
 
-    certificate = Certificate(args.gas_limit, sequence)
-    print(certificate)
+    for loop in loops:
+        loop.find_key_variable(ssa)
+
+    growth_traces = get_growth_traces(traces, loops)
+
+    SeqGenerator(growth_traces, loops).execute(args.timeout)
+
+    print(Certificate(args.gas_limit, loops))
 
 
 def visualize_cfg(cfg: CFG):

@@ -3,7 +3,7 @@ from collections import defaultdict, deque
 
 from src.cfg.bb import BB
 import src.rattle as rattle
-from src.cfg.loop import Loop
+from src.loop import Loop
 
 
 class CFG(object):
@@ -204,8 +204,7 @@ class CFG(object):
             for succ in bb.succ:
                 g.add_edge(bb.start, succ.start)
         l = list(networkx.simple_cycles(g))
-        loops = defaultdict(list)
-        loops_with_gas_sanitizers = []
+        loops = []
         for i in l:
 
             if len([h for h in i if (len(self._bb_at[h].pred)) > 2]) > 0:
@@ -233,16 +232,14 @@ class CFG(object):
                 idx = k % len(i)
                 loop.body.append(i[idx])
 
-            loops[head[0]].append(loop)
+            loops.append(loop)
 
         return loops
 
     def find_functions_with_loop(self, ssa, loops):
         functions_with_loop = defaultdict(rattle.SSAFunction)
-
-        for key in loops:
-            for f in ssa.functions:
-                if f.name not in ['_dispatch', '_fallthrough'] and f.offset in self._bb_at[key].ancestors:
-                    functions_with_loop[f.offset] = f
-
+        for loop in loops:
+            for func in ssa.functions:
+                if func.name not in ['_dispatch', '_fallthrough'] and func.offset in self._bb_at[loop.head].ancestors:
+                    functions_with_loop[func.offset] = func
         return functions_with_loop
