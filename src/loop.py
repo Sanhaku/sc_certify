@@ -48,7 +48,6 @@ class Loop(object):
         self._key_variable = value
 
     def find_key_variable(self, ssa: Recover):
-        # TODO: find key variable for the loop
 
         for f in ssa.functions:
             for b in f.blocks:
