@@ -45,18 +45,17 @@ def analyze(code, args):
     # visualize_cfg(cfg)
     loops = cfg.find_loops()
     ssa = Recover(bytes.hex(code).encode(), edges=[], optimize=True)
-    functions_with_loop = cfg.find_functions_with_loop(ssa, loops)
-
-    GasEstimate.cal_iterate_times(
-        functions_with_loop, loops, args.gas_limit)
 
     traces = SymExec(ssa, args.max_depth).execute()
     # print(f"Found {len(traces)} traces")
-
     for loop in loops:
         loop.find_key_variable(ssa)
-
+    loops = list(filter(lambda x: x.key_variable is not None, loops))
     growth_traces = get_growth_traces(traces, loops)
+
+    functions_with_loop = cfg.find_functions_with_loop(ssa, loops)
+    GasEstimate.cal_iterate_times(
+        functions_with_loop, loops, args.gas_limit)
 
     SeqGenerator(growth_traces, loops).execute(args.timeout)
 
