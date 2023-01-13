@@ -5,8 +5,7 @@ from src.tx_seq import TxSeq
 
 
 class SeqGenerator(object):
-    def __init__(self, growth_traces: List[Trace], loops: List[Loop]):
-        self.growth_traces = growth_traces
+    def __init__(self, loops: List[Loop]):
         self.loops = loops
 
     def execute(self, timeout=300_000) -> TxSeq:

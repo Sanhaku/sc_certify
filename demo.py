@@ -51,13 +51,13 @@ def analyze(code, args):
     for loop in loops:
         loop.find_key_variable(ssa)
     loops = list(filter(lambda x: x.key_variable is not None, loops))
-    growth_traces = get_growth_traces(traces, loops)
+    loops = get_growth_traces(traces, loops)
 
     functions_with_loop = cfg.find_functions_with_loop(ssa, loops)
     GasEstimate.cal_iterate_times(
         functions_with_loop, loops, args.gas_limit)
 
-    SeqGenerator(growth_traces, loops).execute(args.timeout)
+    SeqGenerator(loops).execute(args.timeout)
 
     print(Certificate(args.gas_limit, loops))
 

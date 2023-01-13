@@ -1,3 +1,4 @@
+from collections import defaultdict
 import logging
 from src.rattle import Recover
 from src.utils import get_source
@@ -15,6 +16,7 @@ class Loop(object):
         self._key_variable = None
         self._iterate_times = 0
         self._tx_sequence = None
+        self.growth_traces = defaultdict(list)
 
     def __str__(self):
         return str(self.body)
