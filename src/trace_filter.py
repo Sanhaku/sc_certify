@@ -4,7 +4,6 @@ from src.sym_exec.trace import Trace
 
 
 def get_growth_traces(traces: List[Trace], loops: List[Loop]) -> List[Loop]:
-
     for loop in loops:
         idx = 0
         for key_insn in loop.key_variable:
@@ -19,7 +18,11 @@ def get_growth_traces(traces: List[Trace], loops: List[Loop]) -> List[Loop]:
 
                     for instruction in analyzed_block.block.insns:
                         if instruction.insn.name == 'SSTORE' and instruction.arguments[0] == arg:
+                            # rule out situations like set zero and newArray[]
                             if instruction.arguments[1].value == -1 and instruction.arguments[1].concrete_value == 0:
+                                continue
+                            writer = instruction.arguments[1].writer
+                            if writer is not None and writer.insn.name == 'MLOAD':
                                 continue
                             growth_flag = True
                             break
