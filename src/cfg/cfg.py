@@ -243,3 +243,27 @@ class CFG(object):
                 if func.name not in ['_dispatch', '_fallthrough'] and func.offset in self._bb_at[loop.head].ancestors:
                     functions_with_loop[func.offset] = func
         return functions_with_loop
+
+
+    def find_key_traces(self, ssa, loops):
+        import networkx
+        g = networkx.DiGraph()
+        for bb in self.bbs:
+            for succ in bb.succ:
+                if bb.start < succ.start:
+                    g.add_edge(bb.start, succ.start)
+        leaves = [v for v, d in g.out_degree() if d == 0]
+        paths = list(networkx.all_simple_paths(g, self.root.start, leaves))
+        traces = defaultdict(list)
+        for p in paths:
+            if len([loop for loop in loops if loop.head in p]) == 0:
+                continue
+            path_bbs = [bb for j in p for bb in self.bbs if bb.start == j]
+            
+            for func in ssa.functions:
+                if func.name in ['_fallthrough']:
+                    continue
+                if len([b for b in path_bbs if b.start == func.offset]) > 0:
+                    traces[func.offset].append(path_bbs)
+
+        return traces
