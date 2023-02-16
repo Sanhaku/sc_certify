@@ -10,8 +10,10 @@ class BB(object):
         self.streads = set()  # indices of stack-items that will be read by this BB (0 is the topmost item on stack)
         self.stwrites = set()  # indices of stack-items that will be written by this BB (0 is the topmost item on stack)
         self.stdelta = 0
+        self.static_gas = 0
         for i in ins:
             i.bb = self
+            self.static_gas += i.gas
             if 0x80 <= i.op <= 0x8f:  # Special handling for DUP
                 ridx = i.op - 0x80 - self.stdelta
                 widx = -1 - self.stdelta
@@ -176,6 +178,8 @@ class BB(object):
 
     def __str__(self):
         s = 'BB @ %x\tStack %d' % (self.start, self.stdelta)
+        s += '\n'
+        s += 'Static gas: %d' % (self.static_gas)
         s += '\n'
         s += 'Stackreads: {%s}' % (', '.join(map(str, sorted(self.streads))))
         s += '\n'
