@@ -1,7 +1,6 @@
 from collections import defaultdict
 import logging
-from src.rattle import Recover
-from src.utils import get_source
+from src.rattle import Recover, ConcreteStackValue
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +16,7 @@ class Loop(object):
         self._iterate_times = 0
         self._tx_sequence = None
         self.growth_traces = defaultdict(list)
+        self.function = None
 
     def __str__(self):
         return str(self.body)
@@ -63,16 +63,41 @@ class Loop(object):
 
         writer_insn = judge_arg.writer
         source = []
-        get_source(writer_insn, source, [])
+        self.__get_source(writer_insn, source, [])
 
         if len(source) == 0:
-            logger.warning("Cannot find key variable")
+            logger.warning(f"Cannot find key variable for loop {self.head}")
             return
 
         self._key_variable = source
-        # self._key_variable = []
-        # for s in source:
-        #     if s.insn.name == 'CALLDATALOAD':
-        #         self._key_variable.append(('CALLDATALOAD', s.arguments[0]))
-        #     elif s.insn.name == 'SLOAD':
-        #         self._key_variable.append(('SLOAD', s.arguments[0]))
+
+    def __get_source(self, writer_insn, source, return_values):
+        if writer_insn.return_value not in return_values:
+            return_values.append(writer_insn.return_value)
+        else:
+            return
+        if writer_insn.insn.name in ['SLOAD', 'CALLDATALOAD']:
+            source.append(writer_insn)
+            return
+        if writer_insn.insn.name in ['MLOAD']:
+            return
+
+        if writer_insn.insn.name in ['PHI']:
+            self.__get_source(
+                writer_insn.arguments[0].writer, source, return_values)
+            self.__get_source(
+                writer_insn.arguments[1].writer, source, return_values)
+            return
+
+        if len(writer_insn.arguments) == 1:
+            if not isinstance(writer_insn.arguments[0], ConcreteStackValue):
+                self.__get_source(
+                    writer_insn.arguments[0].writer, source, return_values)
+        elif len(writer_insn.arguments) == 2:
+            if not isinstance(writer_insn.arguments[0], ConcreteStackValue):
+                self.__get_source(
+                    writer_insn.arguments[0].writer, source, return_values)
+            if not isinstance(writer_insn.arguments[1], ConcreteStackValue):
+                self.__get_source(
+                    writer_insn.arguments[1].writer, source, return_values)
+        return
