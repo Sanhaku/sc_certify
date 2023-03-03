@@ -34,3 +34,33 @@ def get_growth_traces(traces: List[Trace], loops: List[Loop]) -> List[Loop]:
             idx += 1
 
     return loops
+
+
+def get_traces_with_loop(cfg, ssa, loops) -> List:
+    import networkx
+    g = networkx.DiGraph()
+    for bb in cfg.bbs:
+        for succ in bb.succ:
+            if bb.start < succ.start:
+                g.add_edge(bb.start, succ.start)
+    leaves = [v for v, d in g.out_degree() if d == 0]
+    paths = list(networkx.all_simple_paths(g, cfg.root.start, leaves))
+    
+    traces = []
+    for p in paths:
+        if len([loop for loop in loops if loop.head in p]) == 0:
+            continue
+        
+        path_blocks = [b for num in p for f in ssa.functions for b in f.blocks if num == b.offset]
+        traces.append(path_blocks)
+    
+    # set function for loop    
+    for loop in loops:
+        for func in ssa.functions:
+            if func.name in ['_fallthrough']:
+                continue
+            if func.offset in loop.bbs[0].ancestors:
+                loop.function = func
+                break
+
+    return traces
