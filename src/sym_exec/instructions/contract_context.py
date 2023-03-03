@@ -174,6 +174,9 @@ def inst_codecopy(instruction: SSAInstruction, state: State):
         mem.store(dest_offset, BitVec(str(hash(instruction)), length * 8), length)
         return
 
+    if length == 0:
+        return
+
     mem.extend(dest_offset, length)
     code = state.environment.contract_code
     start_idx = offset * 2
