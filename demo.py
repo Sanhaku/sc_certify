@@ -9,7 +9,7 @@ from src.cfg.disassembly import generate_BBs
 import src.gas_estimate as GasEstimate
 from src.seq_generator import SeqGenerator
 from src.certificate import Certificate
-from src.trace_filter import get_growth_traces
+import src.trace_filter as TraceFilter
 
 logger = logging.getLogger()
 
@@ -51,14 +51,16 @@ def analyze(code, args):
     for loop in loops:
         loop.find_key_variable(ssa)
     loops = list(filter(lambda x: x.key_variable is not None, loops))
-    loops = get_growth_traces(traces, loops)
+    loops = TraceFilter.get_growth_traces(traces, loops)
     key_traces = cfg.find_key_traces(ssa, loops)
     GasEstimate.cal_iterate_times(
         key_traces, loops, args.gas_limit)
 
-    SeqGenerator(loops).execute(args.timeout)
 
-    print(Certificate(args.gas_limit, loops))
+    traces_with_loop = TraceFilter.get_traces_with_loop(cfg, ssa, loops)
+    seq = SeqGenerator(ssa, loops, traces_with_loop).execute(args.timeout)
+
+    print(Certificate(args.gas_limit, loops, seq))
 
 
 def visualize_cfg(cfg: CFG):
