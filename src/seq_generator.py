@@ -1,26 +1,22 @@
 import logging
 from typing import List
-from itertools import chain
-from copy import copy
 from z3 import BitVec, Solver, sat, unsat
 from src.loop import Loop
 from src.rattle.ssa import ConcreteStackValue
 from src.sym_exec.environment import Environment
 from src.sym_exec.trace import Trace
-from src.sym_exec.analyzed_block import AnalyzedBlock
 from src.sym_exec.instructions import instructions_functions
 from src.sym_exec.utils import WORD_SIZE
 
 logger = logging.getLogger(__name__)
 
-ITERATE_TIMES = 1000
-
 
 class SeqGenerator(object):
-    def __init__(self, ssa, loops: List[Loop], key_traces: List):
+    def __init__(self, ssa, loops: List[Loop], key_traces: List, func_iterate_times):
         self.ssa = ssa
         self.loops = loops
         self.key_traces = key_traces
+        self.func_iterate_times = func_iterate_times
         self.exec_seq = dict()
 
     def execute(self, timeout=300_000):
@@ -56,8 +52,9 @@ class SeqGenerator(object):
                 continue
             head_idx = key_trace.index(loop_body[0])
             blocks = key_trace[:head_idx]
-            # TODO: replace iterate_times
-            for i in range(ITERATE_TIMES):
+
+            iterate_times = int(self.func_iterate_times[loop.function.offset])
+            for i in range(iterate_times):
                 blocks.extend(loop_body)
             blocks.extend(key_trace[head_idx:])
 
@@ -70,6 +67,7 @@ class SeqGenerator(object):
         return unsat
 
     def __solve_reachability(self, loop, timeout):
+        iterate_times = int(self.func_iterate_times[loop.function.offset])
         for v_idx, key_variable in enumerate(loop.key_variable):
             if key_variable.insn.name == "SLOAD":
                 # key variable is a global variable
@@ -77,7 +75,7 @@ class SeqGenerator(object):
                 # TODO: set initial value for key variable
                 key_expr = 0
                 # calculate the final state of the key variable
-                final_value = self.__get_final_state(loop, ITERATE_TIMES)
+                final_value = self.__get_final_state(loop, iterate_times)
 
                 growth_traces = loop.growth_traces[v_idx]
                 if len(growth_traces) == 0:
@@ -97,7 +95,8 @@ class SeqGenerator(object):
                     if s.check() == sat:
                         func = loop.function
                         if func is not None:
-                            self.exec_seq[func.offset] = seq(trace, growth_times, func, ITERATE_TIMES)
+                            self.exec_seq[func.offset] = seq(
+                                trace, growth_times, func, iterate_times)
                             return sat
                         else:
                             logger.error(
@@ -233,7 +232,7 @@ class SeqGenerator(object):
 
 
 class seq(object):
-    def __init__(self, growth_trace = None, growth_times = None, func = None, iterate_times = None):
+    def __init__(self, growth_trace=None, growth_times=None, func=None, iterate_times=None):
         self.growth_trace = growth_trace
         self.growth_times = growth_times
         self.func = func

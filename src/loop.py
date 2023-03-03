@@ -66,7 +66,7 @@ class Loop(object):
         self.__get_source(writer_insn, source, [])
 
         if len(source) == 0:
-            logger.warning(f"Cannot find key variable for loop {self.head}")
+            logger.warning(f"Cannot find key variable for loop {self.head:#x}")
             return
 
         self._key_variable = source

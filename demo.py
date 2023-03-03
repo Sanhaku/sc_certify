@@ -53,12 +53,11 @@ def analyze(code, args):
     loops = list(filter(lambda x: x.key_variable is not None, loops))
     loops = TraceFilter.get_growth_traces(traces, loops)
     key_traces = cfg.find_key_traces(ssa, loops)
-    GasEstimate.cal_iterate_times(
+    func_iterate_times = GasEstimate.cal_iterate_times(
         key_traces, loops, args.gas_limit)
 
-
     traces_with_loop = TraceFilter.get_traces_with_loop(cfg, ssa, loops)
-    seq = SeqGenerator(ssa, loops, traces_with_loop).execute(args.timeout)
+    seq = SeqGenerator(ssa, loops, traces_with_loop, func_iterate_times).execute(args.timeout)
 
     print(Certificate(args.gas_limit, loops, seq))
 
